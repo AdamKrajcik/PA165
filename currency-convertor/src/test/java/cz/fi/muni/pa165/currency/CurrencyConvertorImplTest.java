@@ -11,8 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-import org.assertj.core.api.Assertions.*;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -72,7 +70,7 @@ public class CurrencyConvertorImplTest {
     public void testConvertWithExternalServiceFailure() throws ExternalServiceFailureException {
         when(exchangeRateTable.getExchangeRate(CZK, EUR)).thenThrow(ExternalServiceFailureException.class);
         expectedException.expect(UnknownExchangeRateException.class);
-        convertor.convert(CZK, EUR, new BigDecimal("10.00"));
+        convertor.convert(CZK, EUR, new BigDecimal("20.00"));
     }
 
 }

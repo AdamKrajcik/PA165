@@ -24,6 +24,9 @@ public class CurrencyConvertorImpl implements CurrencyConvertor {
 
     @Override
     public BigDecimal convert(Currency sourceCurrency, Currency targetCurrency, BigDecimal sourceAmount) {
+        logger.trace(String.format("Invocation of convert with params (%s, %s, %s)",
+                sourceCurrency, targetCurrency, sourceAmount));
+
         if (sourceCurrency == null) {
             throw new IllegalArgumentException("sourceCurrency is null.");
         }
@@ -40,12 +43,15 @@ public class CurrencyConvertorImpl implements CurrencyConvertor {
             BigDecimal rate = exchangeRateTable.getExchangeRate(sourceCurrency, targetCurrency);
 
             if (rate == null) {
+                logger.warn(String.format("Unknown exchange rate with currencies (%s, %s)",
+                        sourceCurrency, targetCurrency));
                 throw new UnknownExchangeRateException("Unknown exchange rate.");
             }
 
             return rate.multiply(sourceAmount).setScale(2, RoundingMode.HALF_EVEN);
         } catch (ExternalServiceFailureException ex) {
-            throw new UnknownExchangeRateException("ExternalServiceFailureException");
+            logger.error("Error connecting to exchange rate table", ex);
+            throw new UnknownExchangeRateException("ExternalServiceFailureException", ex);
         }
     }
 
