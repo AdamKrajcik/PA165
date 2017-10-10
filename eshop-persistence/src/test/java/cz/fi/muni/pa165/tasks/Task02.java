@@ -45,5 +45,13 @@ public class Task02 extends AbstractTestNGSpringContextTests {
 		Assert.fail("Couldn't find product "+ expectedProductName+ " in collection "+products);
 	}
 
-	
+	@BeforeClass
+        public static void setUp() {
+            
+        }
+        
+        @Test
+        public void test() {
+            
+        }
 }

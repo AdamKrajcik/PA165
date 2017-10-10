@@ -15,69 +15,73 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Category {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	
-	@NotNull
-	@Column(nullable=false,unique=true)
-	private String name;
-	
 
-	//TODO after you are done with task02 you can uncomment this methods
-//	public void addProduct(Product product) {
-//		this.products.add(product);
-//	}
-//
-//	public Set<Product> getProducts() {
-//		return Collections.unmodifiableSet(products);
-//	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public Category(Long categoryId) {
-		this.id = categoryId; 
-	}
-	public Category() {
-	}
+    @NotNull
+    @Column(nullable = false, unique = true)
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    @ManyToMany
+    private Set<Product> products;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
 
+    public Set<Product> getProducts() {
+        return Collections.unmodifiableSet(products);
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Category(Long categoryId) {
+        this.id = categoryId;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    public Category() {
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (! (obj instanceof Category))
-			return false;
-		Category other = (Category) obj;
-		if (name == null) {
-			if (other.getName() != null)
-				return false;
-		} else if (!name.equals(other.getName()))
-			return false;
-		return true;
-	}
-	
-	
-	
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Category)) {
+            return false;
+        }
+        Category other = (Category) obj;
+        if (name == null) {
+            if (other.getName() != null) {
+                return false;
+            }
+        } else if (!name.equals(other.getName())) {
+            return false;
+        }
+        return true;
+    }
+
 }
